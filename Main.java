@@ -82,3 +82,11 @@ public class Main {
         enviarResultado(clase, "profesor@universidad.edu");
     }
 }
+
+static void comprobar(String nombre, int esperado, int obtenido) {
+    if (esperado == obtenido) {
+        System.out.println("OK:" + nombre);
+    } else {
+        System.out.println("FALLO:" + nombre * " | esperando=" + esperado + " | obtenido=" + obtenido);
+    }
+}
