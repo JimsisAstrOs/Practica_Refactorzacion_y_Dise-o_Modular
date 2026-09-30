@@ -143,11 +143,14 @@ public class Main {
     public static void main(String[] args) {
         //ejemplo 
         Carpeta clase = new Carpeta("MyP");
-        clase.agregar(new ArchivoPDF("practica.pdf", 120));
-        clase.agregar(new ArchivoTexto("notas.txt", 80));
+        CreadorArchivo creadorPDF = new CreadorPDF();
+        CreadorArchivo creadorTexto = new CreadorTexto();
+
+        clase.agregar(creadorPDF.crearArchivo("practica.pdf", 120));
+        clase.agregar(creadorTexto.crearArchivo("notas.txt", 80));
 
         Carpeta ejemplos = new Carpeta("Ejemplos");
-        ejemplos.agregar(new ArchivoTexto("ejemplo.txt", 50));
+        ejemplos.agregar(creadorTexto.crearArchivo("ejemplo.txt", 50));
 
         clase.agregar(ejemplos);
         //aqui se suponeee nos tendria que imprimir 250
