@@ -18,11 +18,15 @@ Cada archivo tiene un tamaño y el programa debe calcular el tamaño total de un
 
 El ejemplo principal utilizado durante la práctica es:
 
+```
+
 MyP/
 |-- practica.pdf   (120)
 |-- notas.txt    (80)
 |-- Ejemplos/
-   |-- ejemplo.txt (50)
+   |-- ejemplo.txt (50)`
+
+```
 
 Por lo tanto, el tamaño total esperado es:
 
