@@ -138,6 +138,25 @@ public class Main {
         cero.agregar(new ArchivoTexto("vacio.txt", 0));
 
         comprobar("Archivo de tamaño 0", 0, cero.obtenerTamanio());
+
+        //Pruebas Factory Method
+        CreadorArchivo creadorPDF = new CreadorPDF();
+        Archivo pdf = creadorPDF.crearArchivo("prueba.pdf", 100);
+
+        if (pdf instanceof ArchivoPDF) {
+            System.out.println("OK: Factory crea ArchivoPDF");
+        } else {
+            System.out.println("FALLO: Factory no crea ArchivoPDF");
+        }
+        
+        CreadorArchivo creadorTexto = new CreadorTexto();
+        Archivo texto = creadorTexto.crearArchivo("prueba.txt", 100);
+
+        if (texto instanceof ArchivoTexto) {
+            System.out.println("OK: Factory crea ArchivoTexto");
+        } else {
+            System.out.println("FALLO: Factory no crea ArchivoTexto");
+        }
     }
 
     public static void main(String[] args) {
