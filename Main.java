@@ -35,6 +35,24 @@ class ArchivoTexto extends Archivo {
     }
 }
 
+abstract class CreadorArchivo {
+    abstract Archivo crearArchivo(String nombre, int tamanio);
+}
+
+class CreadorPDF extends CreadorArchivo {
+    @Override
+    Archivo crearArchivo(String nombre, int tamanio){
+        return new ArchivoPDF(nombre, tamanio);
+    }
+}
+
+class CreadorTexto extends CreadorArchivo {
+    @Override
+    Archivo crearArchivo(String nombre, int tamanio){
+        return new ArchivoTexto(nombre, tamanio);
+    }
+}
+
 class Carpeta implements Elemento {
     String nombre;
     List<Elemento> elementos = new ArrayList<>();
@@ -58,7 +76,7 @@ class Carpeta implements Elemento {
         return total;
     }
 
- }
+}
 
 //CORREO LEGACY
 
@@ -142,7 +160,7 @@ public class Main {
         CorreoLegacy correo = new CorreoLegacy();
         correo.send_email(
             "profesor@universidad.edu",
-             "Tamanio total: " + clase.obtenerTamanio()
+            "Tamanio total: " + clase.obtenerTamanio()
             );
 
     }
