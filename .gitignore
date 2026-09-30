@@ -1,0 +1,22 @@
+# Java compilado
+*.class
+
+# Carpeta de compilación
+target/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+build/
+dist/
+.nb-gradle/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
