@@ -38,6 +38,24 @@ class ArchivoTexto extends Archivo {
     }
 }
 
+abstract class CreadorArchivo {
+    abstract Archivo crearArchivo(String nombre, int tamanio);
+}
+
+class CreadorPDF extends CreadorArchivo {
+    @Override
+    Archivo crearArchivo(String nombre, int tamanio){
+        return new ArchivoPDF(nombre, tamanio);
+    }
+}
+
+class CreadorTexto extends CreadorArchivo {
+    @Override
+    Archivo crearArchivo(String nombre, int tamanio){
+        return new ArchivoTexto(nombre, tamanio);
+    }
+}
+
 class Carpeta implements Elemento {
     String nombre;
     List<Elemento> elementos = new ArrayList<>();
@@ -61,7 +79,6 @@ class Carpeta implements Elemento {
         return total;
     }
 }
-
 
 // ====================
 // CORREO LEGACY
@@ -184,15 +201,28 @@ public class Main {
         // Prueba 5: archivo de tamaño 0
         Carpeta cero = new Carpeta("Cero");
 
-        cero.agregar(
-            new ArchivoTexto("vacio.txt", 0)
-        );
+        cero.agregar(new ArchivoTexto("vacio.txt", 0));
 
-        comprobar(
-            "Archivo de tamaño 0",
-            0,
-            cero.obtenerTamanio()
-        );
+        comprobar("Archivo de tamaño 0", 0, cero.obtenerTamanio());
+
+        //Pruebas Factory Method
+        CreadorArchivo creadorPDF = new CreadorPDF();
+        Archivo pdf = creadorPDF.crearArchivo("prueba.pdf", 100);
+
+        if (pdf instanceof ArchivoPDF) {
+            System.out.println("OK: Factory crea ArchivoPDF");
+        } else {
+            System.out.println("FALLO: Factory no crea ArchivoPDF");
+        }
+        
+        CreadorArchivo creadorTexto = new CreadorTexto();
+        Archivo texto = creadorTexto.crearArchivo("prueba.txt", 100);
+
+        if (texto instanceof ArchivoTexto) {
+            System.out.println("OK: Factory crea ArchivoTexto");
+        } else {
+            System.out.println("FALLO: Factory no crea ArchivoTexto");
+        }
     }
 
 
@@ -222,20 +252,14 @@ public class Main {
 
         Carpeta clase = new Carpeta("MyP");
 
-        clase.agregar(
-            new ArchivoPDF("practica.pdf", 120)
-        );
+        CreadorArchivo creadorPDF = new CreadorPDF();
+        CreadorArchivo creadorTexto = new CreadorTexto();
 
-        clase.agregar(
-            new ArchivoTexto("notas.txt", 80)
-        );
-
+        clase.agregar(creadorPDF.crearArchivo("practica.pdf", 120));
+        clase.agregar(creadorTexto.crearArchivo("notas.txt", 80));
 
         Carpeta ejemplos = new Carpeta("Ejemplos");
-
-        ejemplos.agregar(
-            new ArchivoTexto("ejemplo.txt", 50)
-        );
+        ejemplos.agregar(creadorTexto.crearArchivo("ejemplo.txt", 50));
 
         clase.agregar(ejemplos);
 
@@ -259,10 +283,6 @@ public class Main {
 
         Notificador notificador = new AdaptadorCorreo(correo);
 
-        enviarResultado(
-            clase,
-            "profesor@universidad.edu",
-            notificador
-        );
+        enviarResultado(clase, "profesor@universidad.edu", notificador);
     }
 }
