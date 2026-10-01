@@ -94,7 +94,7 @@ class CorreoLegacy {
 
 
 // ====================
-// ADAPTER (TU PARTE)
+// ADAPTER
 // ====================
 
 interface Notificador {
@@ -126,13 +126,9 @@ public class Main {
     static void comprobar(String nombre, int esperado, int obtenido) {
 
         if (esperado == obtenido) {
-            System.out.println("OK: " + nombre);
+            System.out.println("OK: " + nombre + " | esperado=" + esperado + " | obtenido=" + obtenido);
         } else {
-            System.out.println(
-                "FALLO: " + nombre
-                + " | esperado=" + esperado
-                + " | obtenido=" + obtenido
-            );
+            System.out.println("FALLO: " + nombre + " | esperado=" + esperado + " | obtenido=" + obtenido);
         }
     }
 
@@ -183,6 +179,8 @@ public class Main {
 
         // Prueba 4: carpeta con subcarpeta
         Carpeta padre = new Carpeta("Padre");
+        padre.agregar(new ArchivoPDF("practica.pdf", 120));
+        padre.agregar(new ArchivoTexto("notas.txt", 80));
         Carpeta hija = new Carpeta("Hija");
 
         hija.agregar(
@@ -191,11 +189,7 @@ public class Main {
 
         padre.agregar(hija);
 
-        comprobar(
-            "Carpeta con subcarpeta",
-            50,
-            padre.obtenerTamanio()
-        );
+        comprobar("Ejemplo completo", 250, padre.obtenerTamanio());
 
 
         // Prueba 5: archivo de tamaño 0

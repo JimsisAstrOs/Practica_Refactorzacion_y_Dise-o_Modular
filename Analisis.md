@@ -41,7 +41,7 @@ Se ejecutaron los cinco casos de prueba requeridos para comprobar la consistenci
 | **Prueba 1** | Carpeta vacía (`Carpeta("Vacia")`) | 0 | 0 | **OK** |
 | **Prueba 2** | Carpeta con un PDF de 120 | 120 | 120 | **OK** |
 | **Prueba 3** | Carpeta con PDF (120) + TXT (80) | 200 | 200 | **OK** |
-| **Prueba 4** | Carpeta padre con subcarpeta hija (TXT 50) | 50 | 50 | **OK** |
+| **Prueba 4** | Carpeta padre con PDF (120), TXT (80) y subcarpeta con TXT (50) | 250 | 250 | **OK** |
 | **Prueba 5** | Carpeta con archivo de tamaño 0 | 0 | 0 | **OK** |
 
 *Nota: La ejecución del ejemplo principal conservó correctamente el valor total de **250**.*
@@ -55,14 +55,16 @@ Se ejecutaron los cinco casos de prueba requeridos para comprobar la consistenci
 * **`Elemento` (Interfaz):** Define el contrato uniforme (`obtenerTamanio()`) para que los archivos (hojas) y las carpetas (compuestos) sean tratados de forma homogénea.
 * **`Carpeta`:** Asumió la responsabilidad de contener una única lista polimórfica (`List<Elemento>`). Ahora calcula su tamaño delegando recursivamente la llamada `obtenerTamanio()` a sus elementos internos sin necesidad de preguntar si son archivos o carpetas.
 * **`Notificador` (Interfaz):** Define el contrato abstracto `enviar(destino, mensaje)` que requiere el cliente del programa.
-* **`AdaptadorCorreo` (Adapter):** Se encarga de traducir el método genérico `enviar(destino, mensaje)` hacia el método específico `send_email(to, body)` de la clase heredada `CorreoLegacy`.
-
+* **`AdaptadorCorreo` (Adapter):** Se encarga de traducir el método genérico `enviar(destino, mensaje)` hacia el método específico `send_email(to, body)` de la clase existente `CorreoLegacy`.
+* **`CreadorArchivo` (Factory Method):** Define la operación para crear un Archivo.
+* **`CreadorPDF` (Factory Method):** Se encarga de crear objetos ArchivoPDF.
+* **`CreadorTexto` (Factory Method):** Se encarga de crear objetos ArchivoTexto.
 ---
 
 ### ¿Qué permaneció igual para quien usa el programa?
 
-* **Comportamiento externo intacto:** La salida en consola sigue mostrando exactamente el resultado esperado de **`250`** para la estructura `MyP` de ejemplo.
+* **Comportamiento externo intacto:** El código interno fue reorganizado mediante `Composite`, `Factory Method` y `Adapter`, pero el resultado observable del programa se conserva: la estructura de archivos produce un tamaño total de **`250`** y el correo simulado se envía al mismo destinatario con el mismo mensaje.
 * **Mensaje de correo simulado:** La salida generada por el envío conserva la estructura y el texto exacto:
   ```text
   Para: profesor@universidad.edu
-  Tamaño total: 250
+  Tamanio total: 250
